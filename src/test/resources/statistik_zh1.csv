@@ -1,0 +1,4 @@
+BFS_NR;GEBIET_NAME;THEMA_NAME;SET_NAME;SUBSET_NAME;INDIKATOR_ID;INDIKATOR_NAME;INDIKATOR_JAHR;INDIKATOR_VALUE;EINHEIT_KURZ;EINHEIT_LANG;
+1;Aeugst a.A.;Bau und Immobilien;Gebäudevolumen, Bauinvestitionen;Gebäudevolumen;169;Gebäudevolumen [1000 m3];2018;970;1000 m3;Tausend Kubikmeter;
+1;Aeugst a.A.;Bau und Immobilien;Gebäudevolumen, Bauinvestitionen;Gebäudevolumen;167;Geb.Vol. Wohnen: Anteil [%];2018;71.3;%;Prozent;
+1;Aeugst a.A.;Bau und Immobilien;Gebäudevolumen, Bauinvestitionen;Gebäudevolumen;157;Geb.Vol. Dienstleistungen: Anteil [%];2018;1.2;%;Prozent;
