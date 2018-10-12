@@ -1,10 +1,20 @@
-package matrix;
+package ch.mrs.matrix.seed.loader.ch.zh;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class DataImpl implements Data {
-	// ;BFS_NR;GEBIET_NAME;THEMA_NAME;SET_NAME;SUBSET_NAME;INDIKATOR_ID;INDIKATOR_NAME;INDIKATOR_JAHR;INDIKATOR_VALUE;EINHEIT_KURZ;EINHEIT_LANG;
+import ch.mrs.matrix.seed.Seed;
 
+/**
+ * Description: Population indicators for canton zuerich in switzerland
+ * Publisher: Kanton Zürich, Direktion der Justiz und des Innern, Statistisches Amt
+ * DataSource: https://statistik.zh.ch/internet/justiz_inneres/statistik/de/daten/gemeindeportraet_kanton_zuerich.html
+ * 
+ * Caution: To create new data files preserve the header row of an existing data file as at time of development the csv files
+ * downloaded from the data source produce exceptions in the csv import unless replacing the header row.
+ * @author donatmueller
+ *
+ */
+public class StatistischesAmtZuerich implements Seed {
 	public final static String BFS_NR = "BFS_NR" ;
 	public final static String GEBIET_NAME = "GEBIET_NAME";
 	public final static String THEMA_NAME = "THEMA_NAME";
@@ -40,22 +50,22 @@ public class DataImpl implements Data {
 	@CsvBindByName(column = EINHEIT_LANG, required = true)
 	private String einheitLang;
 	
-	public DataImpl() {
+	public StatistischesAmtZuerich() {
 		// bean ctor
 	}
 
 	@Override
-	public String getBfsNr() {
+	public String getRegionId() {
 		return bfsNr;
 	}
 
 	@Override
-	public String getGebietName() {
+	public String getRegionName() {
 		return gebietName;
 	}
 
 	@Override
-	public String getThemaName() {
+	public String getThemeName() {
 		return themaName;
 	}
 
@@ -70,32 +80,32 @@ public class DataImpl implements Data {
 	}
 
 	@Override
-	public String getIndikatorId() {
+	public String getIndicatorId() {
 		return indikatorId;
 	}
 
 	@Override
-	public String getIndikatorName() {
+	public String getIndicatorName() {
 		return indikatorName;
 	}
 
 	@Override
-	public String getIndikatorJahr() {
+	public String getIndicatorYear() {
 		return indikatorJahr;
 	}
 
 	@Override
-	public String getIndikatorValue() {
+	public String getIndicatorValue() {
 		return indikatorValue;
 	}
 
 	@Override
-	public String getEinheitKurz() {
+	public String getUnitShort() {
 		return einheitKurz;
 	}
 
 	@Override
-	public String getEinheitLang() {
+	public String getUnitLong() {
 		return einheitLang;
 	}
 }

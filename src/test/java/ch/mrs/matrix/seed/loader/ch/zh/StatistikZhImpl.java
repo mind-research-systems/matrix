@@ -1,15 +1,15 @@
-package matrix;
+package ch.mrs.matrix.seed.loader.ch.zh;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class PersonImpl implements Person {
-	@CsvBindByName
+public class StatistikZhImpl implements Person {
+	@CsvBindByName(column = "BFS_NR", required = true)
 	private String vorname;
-	@CsvBindByName
+	@CsvBindByName(column = "GEBIET_NAME", required = true)
 	private String name;
-	@CsvBindByName
+	@CsvBindByName(column = "THEMA_NAME", required = true)
 	private String geburtsdatum;
-	@CsvBindByName
+	@CsvBindByName(column = "SET_NAME", required = true)
 	private String geschlecht;
 	public String getVorname() {
 		return vorname;

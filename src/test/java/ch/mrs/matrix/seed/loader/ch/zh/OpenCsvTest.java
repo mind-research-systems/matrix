@@ -1,4 +1,4 @@
-package matrix;
+package ch.mrs.matrix.seed.loader.ch.zh;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,8 @@ import org.junit.Test;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import ch.mrs.matrix.seed.SeedFactory;
+
 public class OpenCsvTest {
 	public final static String TEST_RESOURCES = "./src/test/resources/";
 	private final static String TEST_CSV_BASICS = "test.csv";
@@ -20,7 +22,7 @@ public class OpenCsvTest {
 	public final static String TEST_DATA_ZH = "data_zh-test.csv";
 
 	@Test
-	public void parseCsv_TestCsvBasics_AlleVornamenKorrekt() throws IllegalStateException, FileNotFoundException {
+	public void parse_TestCsvBasics_AlleVornamenKorrekt() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersPersonCsv(TEST_RESOURCES + TEST_CSV_BASICS);
 		// assert
@@ -35,7 +37,7 @@ public class OpenCsvTest {
 	}
 	
 	@Test
-	public void parseCsv_StatistikZh_AlleVornamenKorrekt() throws IllegalStateException, FileNotFoundException {
+	public void parse_StatistikZh_AlleVornamenKorrekt() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersStatistikZhCsv(TEST_RESOURCES + TEST_DATA_ZH_HEADER_PERSON_CONTENT);
 		// assert
@@ -50,7 +52,7 @@ public class OpenCsvTest {
 	}
 	
 	@Test
-	public void parseCsv_StatistikZh_FirstAllFieldsSet() throws IllegalStateException, FileNotFoundException {
+	public void parse_StatistikZh_FirstAllFieldsSet() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersStatistikZhCsv(TEST_RESOURCES + TEST_DATA_ZH_HEADER_PERSON_CONTENT);
 		// assert
@@ -60,7 +62,7 @@ public class OpenCsvTest {
 	}
 	
 	@Test
-	public void parseCsv_StatistikZh1_VornameIs1() throws IllegalStateException, FileNotFoundException {
+	public void parse_StatistikZh1_VornameIs1() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersStatistikZhCsv(TEST_RESOURCES + TEST_DATA_ZH_HEADER_AND_CONTENT);
 		// assert
@@ -73,7 +75,7 @@ public class OpenCsvTest {
 	}
 	
 	@Test
-	public void parseCsv_StatistikZh1_FirstAllFieldsSet() throws IllegalStateException, FileNotFoundException {
+	public void parse_StatistikZh1_FirstAllFieldsSet() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersStatistikZhCsv(TEST_RESOURCES + TEST_DATA_ZH_HEADER_AND_CONTENT);
 		// assert
@@ -84,17 +86,17 @@ public class OpenCsvTest {
 	
 	
 	@Test
-	public void parseCsv_StatistikZhWithRealDataButHeaderReplaced_Parsed3206() throws IllegalStateException, FileNotFoundException {
+	public void parse_StatistikZhWithRealDataButHeaderReplaced_Parsed3206() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersStatistikZhCsv(TEST_RESOURCES + TEST_DATA_ZH);
 		// assert
 		assertNotNull(result);
 		assertFalse(result.isEmpty());
-		assertEquals(Factory.DATA_ZH_2018_SIZE, result.size());
+		assertEquals(SeedFactory.DATA_ZH_2018_SIZE, result.size());
 	}
 	
 	@Test
-	public void parseCsv_StatistikZhWithRealDataButHeaderReplaced_FirstAllFieldsSet() throws IllegalStateException, FileNotFoundException {
+	public void parse_StatistikZhWithRealDataButHeaderReplaced_FirstAllFieldsSet() throws IllegalStateException, FileNotFoundException {
 		// arrange & act
 		List<Person> result = parseHeadersStatistikZhCsv(TEST_RESOURCES + TEST_DATA_ZH);
 		// assert
@@ -112,11 +114,11 @@ public class OpenCsvTest {
 	}
 	
 	private List<Person>  parseHeadersPersonCsv(String resource) throws IllegalStateException, FileNotFoundException {
-		CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(new FileReader(resource)).withSeparator(Factory.SEPARATOR).withType(PersonImpl.class).build();
+		CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(new FileReader(resource)).withSeparator(SeedFactory.SEPARATOR).withType(PersonImpl.class).build();
 		return csvToBean.parse();
 	}
 	private List<Person>  parseHeadersStatistikZhCsv(String resource) throws IllegalStateException, FileNotFoundException {
-		CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(new FileReader(resource)).withSeparator(Factory.SEPARATOR).withType(StatistikZhImpl.class).build();
+		CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(new FileReader(resource)).withSeparator(SeedFactory.SEPARATOR).withType(StatistikZhImpl.class).build();
 		return csvToBean.parse();
 	}
 }
