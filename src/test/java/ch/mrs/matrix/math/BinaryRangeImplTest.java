@@ -8,9 +8,10 @@ public class BinaryRangeImplTest {
 	private static final double EXACT = 0.0;
 	private static final double TRIGGER_VALUE = 14.3;
 	private static final double BELOW = 9;
+	private static final double EQUAL = 14.3;
 	private static final double ABOVE = 15;
-	private static final Range<Integer> LOWER = MathFactory.createRange(10, 50);
-	private static final Range<Integer> UPPER = MathFactory.createRange(60, 90);
+	private static final Range<Integer> LOWER = MathFactory.getInstance().createRange(10, 50);
+	private static final Range<Integer> UPPER = MathFactory.getInstance().createRange(60, 90);
 
 	@Test
 	public void getTriggerValue_ValueAsSet() {
@@ -28,6 +29,15 @@ public class BinaryRangeImplTest {
 		BinaryRange<?> testee = createTestee();
 		// act
 		Range<?> result = testee.select(BELOW);
+		// assert
+		assertEquals(LOWER,result);
+	}
+	@Test
+	public void select_equal_getLower() {
+		// arrange
+		BinaryRange<?> testee = createTestee();
+		// act
+		Range<?> result = testee.select(EQUAL);
 		// assert
 		assertEquals(LOWER,result);
 	}

@@ -2,7 +2,7 @@ package ch.mrs.matrix.feature;
 
 import ch.mrs.matrix.validation.Validate;
 
-class FeatureImpl implements Feature {
+abstract class FeatureImpl implements Feature {
 	private final String name;
 
 	FeatureImpl(String name) {

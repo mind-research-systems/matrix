@@ -16,7 +16,7 @@ public class FeatureImplTest {
 
 	@Before
 	public void setup() {
-		testee = new FeatureImpl(NAME);
+		testee = new ConcreteFeature(NAME);
 	}
 
 	@Test
@@ -27,12 +27,9 @@ public class FeatureImplTest {
 		assertEquals(NAME,result);
 	}
 	
-	@Test
-	public void ctor_NameNull_Exception() {
-		// arrange, preassert
-		exceptionRule.expect(IllegalArgumentException.class);
-		// act
-		new FeatureImpl(null);
+	private static class ConcreteFeature extends FeatureImpl {
+		ConcreteFeature(String name) {
+			super(name);
+		}
 	}
-
 }

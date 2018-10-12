@@ -18,7 +18,7 @@ class BinaryRangeImpl implements BinaryRange<Integer> {
 
 	@Override
 	public Range<Integer> select(double randomPercent) {
-		return randomPercent < triggerValueInPercent ? rangeBelow : rangeAbove;
+		return randomPercent <= triggerValueInPercent ? rangeBelow : rangeAbove;
 	}
 
 	@Override

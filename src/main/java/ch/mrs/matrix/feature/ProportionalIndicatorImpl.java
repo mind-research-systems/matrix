@@ -10,6 +10,13 @@ import ch.mrs.matrix.math.Random;
 import ch.mrs.matrix.math.Range;
 import ch.mrs.matrix.validation.Validate;
 
+/**
+ * Generation of Non-Uniform Random Numbers
+ * Implements from: Example 1 (Step 3)
+ * @see https://oroboro.com/non-uniform-random-numbers/
+ * 
+ * @author donatmueller
+ */
 public class ProportionalIndicatorImpl extends IndicatorImpl implements ProportionalIndicator {
 	private final List<IndicatorProportion> proportions;
 	private List<Double> values = new ArrayList<>();
@@ -33,15 +40,16 @@ public class ProportionalIndicatorImpl extends IndicatorImpl implements Proporti
 			this.values.add(value);
 		}
 		List<Range<Integer>> distribution = proportions.stream().map(IndicatorProportion::getRange).collect(Collectors.toList());
-		this.binaryRanges = MathFactory.toBinaryDistribution(distribution, this.values);
+		this.binaryRanges = MathFactory.getInstance().toBinaryDistribution(distribution, this.values);
 	}
 	
 	@Override
 	public int getValue() {
 		Validate.isTrue(!values.isEmpty());
-		final Random random = MathFactory.createRandom();
-		BinaryRange<Integer> binaryRange = binaryRanges.get(random.random(0, getProportions().size() - 2));
-		Range<Integer> range = binaryRange.select(random.random(0.0,100.0));
+		final Random random = MathFactory.getInstance().createRandom();
+		final int index = (int)(random.random() * binaryRanges.size());
+		final BinaryRange<Integer> binaryRange = binaryRanges.get(index); 
+		final Range<Integer> range = binaryRange.select(random.random());
 		return random.random(range.getMinimum(), range.getMaximum());
 	}
 }

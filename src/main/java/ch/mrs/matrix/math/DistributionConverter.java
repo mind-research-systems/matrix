@@ -8,6 +8,8 @@ import ch.mrs.matrix.validation.Validate;
 
 /**
  * Generation of Non-Uniform Random Numbers
+ * Decomposing Non-Uniform Distributions
+ * Implements from: Example 1 (Step 1 and Step 2)
  * @see https://oroboro.com/non-uniform-random-numbers/
  * @author donatmueller
  */
@@ -30,7 +32,7 @@ class DistributionConverter {
 		double sumWeights = weight.stream().collect(Collectors.summingDouble(x -> x));
 		int lastIndex = distribution.size() - 1;
 		for (int i = 0; i < lastIndex; i++) {
-			double triggerValueInPercent =  weight.get(i) / sumWeights * 100 * lastIndex;
+			double triggerValueInPercent =  weight.get(i) * lastIndex / sumWeights;
 			result.add(new BinaryRangeImpl(triggerValueInPercent, distribution.get(i), distribution.get(lastIndex)));
 		}
 		return result;

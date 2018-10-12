@@ -13,7 +13,7 @@ import ch.mrs.matrix.math.Range;
 public class IndicatorProportionImplTest {
 	private static final String NAME = "size";
 	private static final String ID = "42";
-	private static final Range<Integer> RANGE = MathFactory.createRange(15, 25);
+	private static final Range<Integer> RANGE = MathFactory.getInstance().createRange(15, 25);
 	private IndicatorProportion testee;
 	
 	@Rule
@@ -31,13 +31,4 @@ public class IndicatorProportionImplTest {
 		// assert
 		assertEquals(RANGE,result);
 	}
-	
-	@Test
-	public void ctor_RangeNull_Exception() {
-		// arrange, preassert
-		exceptionRule.expect(IllegalArgumentException.class);
-		// act
-		new IndicatorProportionImpl(NAME, ID, null);
-	}
-
 }
