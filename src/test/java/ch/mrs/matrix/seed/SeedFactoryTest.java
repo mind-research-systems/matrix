@@ -11,11 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import ch.mrs.matrix.feature.test.AbstractFactoryTest;
-
-public class SeedFactoryTest extends AbstractFactoryTest {
+public class SeedFactoryTest  {
 	private static final String HORGEN = "Horgen";
 	private final static String BFS_HORGEN = "295";
 	private final static String INDIKATOR_ID_RESTAURANTS = "304";
@@ -25,15 +24,22 @@ public class SeedFactoryTest extends AbstractFactoryTest {
 	private final static int INDIKATOR_ID_BEVOELKERUNG_SIZE = 782;
 	private final static int INDIKATOR_ID_WOHNEN_ANTEIL_SIZE = 964;
 
-	@Override
-	protected Class<?> getFactoryClass() {
-		return SeedFactory.class;
+	private SeedFactory testee;
+	
+	@Before
+	public void setup() {
+		testee = SeedFactory.getInstance();
 	}
 	
- 	@Test
+	@Test
+	public void getInstance_NotNull() {
+		assertNotNull(testee);
+	}
+
+	@Test
 	public void importFromStatistischesAmtZuerich_WithZhData_Parsed3602() throws IOException {
 		// act
-		List<Seed> result = SeedFactory.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018);
+		List<Seed> result = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018);
 		// assert
 		assertNotNull(result);
 		assertEquals(SeedFactory.DATA_ZH_2018_SIZE,result.size());
@@ -42,7 +48,7 @@ public class SeedFactoryTest extends AbstractFactoryTest {
 	@Test
 	public void importFromStatistischesAmtZuerich_WithZhData_FirstAllFieldsSet() throws IOException {
 		// act
-		List<Seed> result = SeedFactory.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018);
+		List<Seed> result = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018);
 		// assert
 		assertNotNull(result);
 		assertFalse(result.isEmpty());
@@ -52,7 +58,7 @@ public class SeedFactoryTest extends AbstractFactoryTest {
 	@Test
 	public void importFromStatistischesAmtZuerich_WithZhDataFilterHorgen_AllGebietHorgen() throws IOException {
 		// act
-		List<Seed> resultsAll = SeedFactory.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
+		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
 		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> BFS_HORGEN.equals(x.getRegionId())).collect(Collectors.toList());
 		// assert
 		assertNotNull(resultsAll);
@@ -92,7 +98,7 @@ public class SeedFactoryTest extends AbstractFactoryTest {
 	
 	private void importFromStatistischesAmtZuerich_WithZhDataFilterById_NotEmpty(String indikator_id, int countExpected) throws IllegalStateException, FileNotFoundException {
 		// act
-		List<Seed> resultsAll = SeedFactory.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
+		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
 		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> indikator_id.equals(x.getIndicatorId())).collect(Collectors.toList());
 		// assert
 		assertNotNull(resultsAll);

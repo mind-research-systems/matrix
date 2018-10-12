@@ -23,4 +23,18 @@ class RangeImpl<T extends Number> implements Range<T> {
 	public T getMaximum() {
 		return maximum;
 	}
+
+
+	@Override
+	public boolean inside(T value) {
+		Validate.notNull(value);
+		double d = value.doubleValue();
+		return getMinimum().doubleValue() <= d && d <= getMaximum().doubleValue();
+	}
+
+
+	@Override
+	public String toString() {
+		return "Range [min=" + minimum + ", max=" + maximum + "]";
+	}
 }

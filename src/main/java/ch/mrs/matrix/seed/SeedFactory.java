@@ -10,6 +10,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import ch.mrs.matrix.seed.loader.ch.zh.StatistischesAmtZuerich;
 
 public class SeedFactory {
+	private final static SeedFactory INSTANCE = new SeedFactory();
 	public final static char SEPARATOR = ';';
 	public final static String RESOURCES = "./src/main/resources/";
 	public final static String DATA_ZH_2018 = "data_zh-2018.csv";
@@ -21,7 +22,11 @@ public class SeedFactory {
 		// factory
 	}
 
-	public static List<Seed> importFromStatistischesAmtZuerich(String resource) throws IllegalStateException, FileNotFoundException {
+	public static SeedFactory getInstance() {
+		return SeedFactory.INSTANCE;
+	}
+	
+	public List<Seed> importFromStatistischesAmtZuerich(String resource) throws IllegalStateException, FileNotFoundException {
 		CsvToBean<Seed> csvToBean = new CsvToBeanBuilder<Seed>(new FileReader(resource)).withSeparator(SEPARATOR).withType(StatistischesAmtZuerich.class).build();
 		return csvToBean.parse();
 	}

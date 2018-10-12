@@ -46,13 +46,5 @@ public class IndicatorImplTest {
 		// assert
 		assertNotNull(result);
 		assertEquals(VALUE,result);
-	}
-	
-	@Test
-	public void ctor_IndicatorIdNull_Exception() {
-		// arrange, preassert
-		exceptionRule.expect(IllegalArgumentException.class);
-		// act
-		new IndicatorImpl(NAME, null);
-	}
+	}	
 }

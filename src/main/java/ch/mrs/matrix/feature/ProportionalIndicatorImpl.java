@@ -33,13 +33,13 @@ public class ProportionalIndicatorImpl extends IndicatorImpl implements Proporti
 			this.values.add(value);
 		}
 		List<Range<Integer>> distribution = proportions.stream().map(IndicatorProportion::getRange).collect(Collectors.toList());
-		this.binaryRanges = MathFactory.toBinaryDistribution(distribution, this.values);
+		this.binaryRanges = MathFactory.getInstance().toBinaryDistribution(distribution, this.values);
 	}
 	
 	@Override
 	public int getValue() {
 		Validate.isTrue(!values.isEmpty());
-		final Random random = MathFactory.createRandom();
+		final Random random = MathFactory.getInstance().createRandom();
 		BinaryRange<Integer> binaryRange = binaryRanges.get(random.random(0, getProportions().size() - 2));
 		Range<Integer> range = binaryRange.select(random.random(0.0,100.0));
 		return random.random(range.getMinimum(), range.getMaximum());
