@@ -22,7 +22,11 @@ public class FeatureFactory {
 		return new ProportionalIndicatorImpl(name, proportions);
 	}
 	
-	public IndicatorProportionImpl createIndicatorProportion(String name, String indicatorId, Range<Integer> range) {
+	public IndicatorProportionBuilder createIndicatorProportionBuilder() {
+		return new IndicatorProportionBuilderImpl();
+	}
+	
+	public IndicatorProportion createIndicatorProportion(String name, String indicatorId, Range<Integer> range) {
 		return new IndicatorProportionImpl(name, indicatorId, range);
 	}
 }

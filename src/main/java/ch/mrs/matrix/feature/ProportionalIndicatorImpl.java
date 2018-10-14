@@ -1,13 +1,12 @@
 package ch.mrs.matrix.feature;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import ch.mrs.matrix.math.BinaryRange;
+import ch.mrs.matrix.math.DistributionGenerator;
 import ch.mrs.matrix.math.MathFactory;
 import ch.mrs.matrix.math.Random;
-import ch.mrs.matrix.math.Range;
 import ch.mrs.matrix.validation.Validate;
 
 /**
@@ -18,13 +17,19 @@ import ch.mrs.matrix.validation.Validate;
  * @author donatmueller
  */
 public class ProportionalIndicatorImpl extends IndicatorImpl implements ProportionalIndicator {
+	private final MathFactory mathFactory;
+	private final Random random ;
 	private final List<IndicatorProportion> proportions;
-	private List<Double> values = new ArrayList<>();
-	List<BinaryRange<Integer>> binaryRanges = null;
+	private final List<Double> values;
+	private final DistributionGenerator<IndicatorProportion> distributionGenerator;
 	
 	public ProportionalIndicatorImpl(String name, List<IndicatorProportion> proportions) {
 		super(name, PROPORTIONAL_INDICATOR_ID);
+		this.mathFactory = MathFactory.getInstance();
+		this.random = mathFactory.createRandom();
 		this.proportions = proportions;
+		this.values = new ArrayList<>();
+		this.distributionGenerator = MathFactory.getInstance().createDistributionGenerator();
 		Validate.notNull(proportions);
 	}
 	@Override
@@ -39,17 +44,16 @@ public class ProportionalIndicatorImpl extends IndicatorImpl implements Proporti
 		for (double value : values) {
 			this.values.add(value);
 		}
-		List<Range<Integer>> distribution = proportions.stream().map(IndicatorProportion::getRange).collect(Collectors.toList());
-		this.binaryRanges = MathFactory.getInstance().toBinaryDistribution(distribution, this.values);
+		distributionGenerator.reset(Collections.emptyList());
+		for (int i=0; i<values.length; i++) {
+			distributionGenerator.add(mathFactory.createDistribution(this.proportions.get(i), this.values.get(i)));
+		}
 	}
 	
 	@Override
 	public int getValue() {
 		Validate.isTrue(!values.isEmpty());
-		final Random random = MathFactory.getInstance().createRandom();
-		final int index = (int)(random.random() * binaryRanges.size());
-		final BinaryRange<Integer> binaryRange = binaryRanges.get(index); 
-		final Range<Integer> range = binaryRange.select(random.random());
-		return random.random(range.getMinimum(), range.getMaximum());
+		IndicatorProportion value = distributionGenerator.nextValue();
+		return random.random(value.getRange().getMinimum(), value.getRange().getMaximum());
 	}
 }

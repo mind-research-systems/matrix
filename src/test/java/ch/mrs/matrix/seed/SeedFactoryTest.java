@@ -17,6 +17,8 @@ import org.junit.Test;
 public class SeedFactoryTest  {
 	private static final String HORGEN = "Horgen";
 	private final static String BFS_HORGEN = "295";
+	private static final String HINWIL = "Hinwil";
+	private final static String BFS_HINWIL = "117";
 	private final static String INDIKATOR_ID_RESTAURANTS = "304";
 	private final static String INDIKATOR_ID_BEVOELKERUNG = "206";
 	private final static String INDIKATOR_ID_WOHNEN_ANTEIL = "167";
@@ -70,6 +72,30 @@ public class SeedFactoryTest  {
 		for (int i=0;i<resultsFiltered.size();i++) {
 			Seed d = resultsFiltered.get(i);
 			assertEquals(HORGEN, d.getRegionName());
+			String name = d.getIndicatorName();
+			String value = d.getIndicatorValue();
+			if (value != null && !features.containsKey(name)) {
+				System.out.println(String.format("Feature: %s, Id: %s = %s", name, d.getIndicatorId(), value));
+				features.put(name, value);
+				
+			}
+		}
+	}
+	@Test
+	public void importFromStatistischesAmtZuerich_WithZhDataFilterHinwil_AllGebietHorgen() throws IOException {
+		// act
+		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
+		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> BFS_HINWIL.equals(x.getRegionId())).collect(Collectors.toList());
+		// assert
+		assertNotNull(resultsAll);
+		assertEquals(SeedFactory.DATA_ZH_2007_2018_SIZE,resultsAll.size());
+		assertFalse(resultsFiltered.isEmpty());
+		assertEquals(880,resultsFiltered.size());
+		Map<String,String> features = new HashMap<>();
+		System.out.println("Gebiet: " + HINWIL);
+		for (int i=0;i<resultsFiltered.size();i++) {
+			Seed d = resultsFiltered.get(i);
+			assertEquals(HINWIL, d.getRegionName());
 			String name = d.getIndicatorName();
 			String value = d.getIndicatorValue();
 			if (value != null && !features.containsKey(name)) {

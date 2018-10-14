@@ -1,7 +1,5 @@
 package ch.mrs.matrix.math;
 
-import java.util.List;
-
 public class MathFactory {
 	private final static MathFactory INSTANCE = new MathFactory();
 	
@@ -12,8 +10,16 @@ public class MathFactory {
 	public static MathFactory getInstance() {
 		return INSTANCE;
 	}
-	public List<BinaryRange<Integer>> toBinaryDistribution(List<Range<Integer>> distribution, List<Double> weights) {
-		return DistributionConverter.getInstance().toBinaryDistribution(distribution, weights);
+//	public List<BinaryRange<Integer>> toBinaryDistribution(List<Range<Integer>> distribution, List<Double> weights) {
+//		return BinaryDistributionConverter.getInstance().toBinaryDistribution(distribution, weights);
+//	}
+
+	public <T> DistributionGenerator<T> createDistributionGenerator() {
+		return new DistributionGeneratorImpl<T>();
+	}
+	
+	public <T> Distribution<T> createDistribution(T category, double percent) {
+		return new DistributionImpl<T>(category, percent);
 	}
 
 	public <T extends Number> Range<T> createRange(T minimum, T maximum) {

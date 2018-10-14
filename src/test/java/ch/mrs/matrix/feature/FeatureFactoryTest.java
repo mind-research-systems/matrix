@@ -3,6 +3,7 @@ package ch.mrs.matrix.feature;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -32,6 +33,39 @@ public class FeatureFactoryTest {
 	@Test
 	public void getInstance_NotNull() {
 		assertNotNull(testee);
+	}
+	
+		
+	@Test
+	public void createIndicator_Any_NotNull() {
+		// arrange, act
+		Indicator result = testee.createIndicator(NAME, ID);
+		// assert
+		assertNotNull(result);
+	}
+	
+	@Test
+	public void createProportionalIndicator_Any_NotNull() {
+		// arrange, act
+		ProportionalIndicator result = testee.createProportionalIndicator(NAME, Collections.emptyList());
+		// assert
+		assertNotNull(result);
+	}
+	
+	@Test
+	public void createIndicatorProportionBuilder_Any_NotNull() {
+		// arrange, act
+		IndicatorProportionBuilder result = testee.createIndicatorProportionBuilder();
+		// assert
+		assertNotNull(result);
+	}
+	
+	@Test
+	public void createIndicatorProportion_Any_NotNull() {
+		// arrange, act
+		IndicatorProportion result = testee.createIndicatorProportion(NAME, ID, RANGE);
+		// assert
+		assertNotNull(result);
 	}
 	
 	@Test

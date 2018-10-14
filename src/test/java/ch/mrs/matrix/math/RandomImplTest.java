@@ -21,6 +21,7 @@ public class RandomImplTest {
 	public void setup() {
 		testee = new RandomImpl();
 	}
+	
 	@Test
 	public void random_doubleValue() {
 		// arrange, act

@@ -1,6 +1,7 @@
 package ch.mrs.matrix.feature;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,22 +17,13 @@ import ch.mrs.matrix.math.MathFactory;
 import ch.mrs.matrix.math.Range;
 
 /**
- * Non uniform ranges of distribution for the feature age of a population 
- * Feature: Population: Range  0-14 Years old [%], Id: 81 = 15.9
- * Feature: Population: Range 15-19 Years old [%], Id: 83 =  5.0
- * Feature: Population: Range 20-39 Years old [%], Id: 85 = 24.9
- * Feature: Population: Range 40-64 Years old [%], Id: 87 = 35.7
- * Feature: Population: Range 65-79 Years old [%], Id: 89 = 13.2
- * Feature: Population: Range 80 u.m.-Jähr. [%], Id: 91 =  5.3
- * @return
- */
-/**
  * 
  * @author donatmueller
  *
  */
 public class ProportionalIndicatorImplTest {
-	private static final int NUM_POPULATION = 10000;
+	private static final double DELTA_ZERO_POINT_TWO = 0.2;
+	private static final int ONE_MILLION = 1000000;
 	private static final String NAME = "age";
 	private final static double AGE_00_TO_14 = 15.9;
 	private final static double AGE_15_TO_19 = 5.0;
@@ -83,16 +75,24 @@ public class ProportionalIndicatorImplTest {
 		// act
 		testee.loadValue(VALUES);
 	}
+
+	@Test
+	public void nextValue_HundretTimes_DistributedDeltaLessThanZeroPointTwo() {
+		// act
+		for (int i=0; i<100; i++) {
+			getValue_AfterLoadValueProduceOneMillionValues_DistributedDeltaLessThanZeroPointTwo();
+		}
+	}
 	
 	@Test
-	public void getValue_AfterLoadValue_Produces500ValuesNonUniformlyDistributedAsRequested() {
+	public void getValue_AfterLoadValueProduceOneMillionValues_DistributedDeltaLessThanZeroPointTwo() {
 		// arrange
 		final List<IndicatorProportion> distribution = createNonUniformDistributionSpecification();
 		testee = new ProportionalIndicatorImpl("Age", distribution);
 		testee.loadValue(VALUES);
 		// act
 		final Map<Range<Integer>,Integer> countForRanges = createCounters(distribution);
-		int numValues = NUM_POPULATION;
+		int numValues = ONE_MILLION;
 		while (numValues-- > 1) {
 			final int age = testee.getValue();
 			boolean hit = false;
@@ -107,22 +107,26 @@ public class ProportionalIndicatorImplTest {
 			if (!hit) {				
 				fail(String.format("Age %s out of all ranges %s",age, countForRanges.keySet()));
 			}
-			
 		}
 		assertEquals(0,numValues);
-		for (Range<Integer> range : countForRanges.keySet()) {
-			System.out.println(String.format("%s: %s", range, 100.0 * countForRanges.get(range) / NUM_POPULATION));
+		int index = 0;
+		while (index < distribution.size()) {
+			IndicatorProportion p = distribution.get(index);
+			assertEquals(p.getName(),VALUES[index],100.0 * countForRanges.get(p.getRange()) / ONE_MILLION,DELTA_ZERO_POINT_TWO);
+			index++;
 		}
 	}
 	
 	
-	private Map<Range<Integer>,Integer> createCounters(List<IndicatorProportion> distribution) {
-		Map<Range<Integer>,Integer> countForRanges = new HashMap<>();
-		for (IndicatorProportion proportion : distribution) {
-			countForRanges.put(proportion.getRange(), 0);
+	private Map<Range<Integer>,Integer> createCounters(List<IndicatorProportion> distributions) {
+		Map<Range<Integer>,Integer> countForCategory = new HashMap<>();
+		for (IndicatorProportion distribution : distributions) {
+			countForCategory.put(distribution.getRange(), 0);
+			
 		}
-		return countForRanges;
+		return countForCategory;
 	}
+	
 	@Test
 	public void ctor_NameNull_Exception() {
 		// arrange, preassert

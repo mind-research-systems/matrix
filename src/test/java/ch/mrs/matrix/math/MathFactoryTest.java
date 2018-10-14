@@ -2,9 +2,6 @@ package ch.mrs.matrix.math;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,8 +10,8 @@ import org.junit.rules.ExpectedException;
 public class MathFactoryTest {
 	private static final int MINIMUM = 28;
 	private static final int MAXIMUM = 45;
-	private static final List<Range<Integer>> DISTRIBUTION = new ArrayList<>();
-	private static final List<Double> WEIGTHS = new ArrayList<>();
+	private static final double PERCENT = 50.2;
+	private static final String CATEGORY = "female";
 	
 	@Rule
 	public ExpectedException exceptionRule = ExpectedException.none();
@@ -32,17 +29,17 @@ public class MathFactoryTest {
 	}
 	
 	@Test
-	public void toBinaryDistribution_Any_NotNull() {
+	public void createRange_Any_NotNull() {
 		// arrange, act
-		List<BinaryRange<Integer>> result = testee.toBinaryDistribution(DISTRIBUTION, WEIGTHS);
+		Range<Integer> result = testee.createRange(MINIMUM, MAXIMUM);
 		// assert
 		assertNotNull(result);
 	}
 	
 	@Test
-	public void createRange_Any_NotNull() {
+	public void createDistribution_Any_NotNull() {
 		// arrange, act
-		Range<Integer> result = testee.createRange(MINIMUM, MAXIMUM);
+		Distribution<String> result = testee.createDistribution(CATEGORY, PERCENT);
 		// assert
 		assertNotNull(result);
 	}
@@ -55,20 +52,4 @@ public class MathFactoryTest {
 		assertNotNull(result);
 	}
 	
-	@Test
-	public void toBinaryDistribution_DistributionNull_Exception() {
-		// arrange, preassert
-		exceptionRule.expect(IllegalArgumentException.class);
-		// act
-		testee.toBinaryDistribution(null, WEIGTHS);
-	}
-	
-	@Test
-	public void toBinaryDistribution_WeightsNull_Exception() {
-		// arrange, preassert
-		exceptionRule.expect(IllegalArgumentException.class);
-		// act
-		testee.toBinaryDistribution(DISTRIBUTION, null);
-	}
-
 }
