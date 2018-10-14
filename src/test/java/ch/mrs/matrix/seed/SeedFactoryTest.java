@@ -82,7 +82,7 @@ public class SeedFactoryTest  {
 		}
 	}
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhDataFilterHinwil_AllGebietHorgen() throws IOException {
+	public void importFromStatistischesAmtZuerich_WithZhDataFilterHinwil_AllGebietHinwil() throws IOException {
 		// act
 		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
 		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> BFS_HINWIL.equals(x.getRegionId())).collect(Collectors.toList());

@@ -10,9 +10,6 @@ public class MathFactory {
 	public static MathFactory getInstance() {
 		return INSTANCE;
 	}
-//	public List<BinaryRange<Integer>> toBinaryDistribution(List<Range<Integer>> distribution, List<Double> weights) {
-//		return BinaryDistributionConverter.getInstance().toBinaryDistribution(distribution, weights);
-//	}
 
 	public <T> DistributionGenerator<T> createDistributionGenerator() {
 		return new DistributionGeneratorImpl<T>();

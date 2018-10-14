@@ -38,7 +38,7 @@ public class ProportionalIndicatorImpl extends IndicatorImpl implements Proporti
 	}
 	
 	@Override
-	public void loadValue(double... values) {
+	public void loadValue(Double... values) {
 		Validate.isTrue(values.length==proportions.size());
 		this.values.clear();
 		for (double value : values) {

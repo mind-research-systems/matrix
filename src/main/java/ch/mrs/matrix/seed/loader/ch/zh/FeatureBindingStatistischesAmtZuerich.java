@@ -12,6 +12,7 @@ import static ch.mrs.matrix.MatrixFeature.*;
 
 public enum FeatureBindingStatistischesAmtZuerich implements FeatureBinding {
 
+
 	POPULATION(CITY_POPULATION,"133"),
 	AGE(INDIVIDUAL_AGE, FeatureFactory.getInstance().createIndicatorProportionBuilder() //
 			.addIndicatorProportion("Population: Range  0-14 Years old [%]","81",0,14) //

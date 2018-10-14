@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface ProportionalIndicator extends Indicator {
 	List<IndicatorProportion> getProportions();
-	void loadValue(double... value);
+	void loadValue(Double... value);
 }

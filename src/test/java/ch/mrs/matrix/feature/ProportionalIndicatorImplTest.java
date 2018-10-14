@@ -33,7 +33,7 @@ public class ProportionalIndicatorImplTest {
 	private final static double AGE_80_NMORE = 5.3;
 	
 	private static final List<IndicatorProportion> PROPORTIONS = new ArrayList<>();
-	private static final double[] VALUES = new double[] {AGE_00_TO_14, AGE_15_TO_19, AGE_20_TO_39, AGE_40_TO_64, AGE_65_TO_79, AGE_80_NMORE}; 
+	private static final Double[] VALUES = new Double[] {AGE_00_TO_14, AGE_15_TO_19, AGE_20_TO_39, AGE_40_TO_64, AGE_65_TO_79, AGE_80_NMORE}; 
 	private ProportionalIndicator testee;
 	
 	@Rule
