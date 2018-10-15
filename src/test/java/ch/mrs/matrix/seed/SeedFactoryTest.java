@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.mrs.matrix.seed.loader.ch.zh.StatistischesAmtZuerich;
+
 public class SeedFactoryTest  {
 	private static final String HORGEN = "Horgen";
 	private final static String BFS_HORGEN = "295";
@@ -39,18 +41,18 @@ public class SeedFactoryTest  {
 	}
 
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhData_Parsed3602() throws IOException {
+	public void load_WithZhData_Parsed3602() throws IOException {
 		// act
-		List<Seed> result = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018);
+		List<Seed> result = testee.load(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018, StatistischesAmtZuerich.class);
 		// assert
 		assertNotNull(result);
 		assertEquals(SeedFactory.DATA_ZH_2018_SIZE,result.size());
 	}
 
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhData_FirstAllFieldsSet() throws IOException {
+	public void load_WithZhData_FirstAllFieldsSet() throws IOException {
 		// act
-		List<Seed> result = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018);
+		List<Seed> result = testee.load(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2018, StatistischesAmtZuerich.class);
 		// assert
 		assertNotNull(result);
 		assertFalse(result.isEmpty());
@@ -58,9 +60,9 @@ public class SeedFactoryTest  {
 	}
 
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhDataFilterHorgen_AllGebietHorgen() throws IOException {
+	public void load_WithZhDataFilterHorgen_AllGebietHorgen() throws IOException {
 		// act
-		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
+		List<Seed> resultsAll = testee.load(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018, StatistischesAmtZuerich.class);
 		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> BFS_HORGEN.equals(x.getRegionId())).collect(Collectors.toList());
 		// assert
 		assertNotNull(resultsAll);
@@ -81,10 +83,11 @@ public class SeedFactoryTest  {
 			}
 		}
 	}
+	
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhDataFilterHinwil_AllGebietHinwil() throws IOException {
+	public void load_WithZhDataFilterHinwil_AllGebietHinwil() throws IOException {
 		// act
-		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
+		List<Seed> resultsAll = testee.load(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018, StatistischesAmtZuerich.class);
 		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> BFS_HINWIL.equals(x.getRegionId())).collect(Collectors.toList());
 		// assert
 		assertNotNull(resultsAll);
@@ -108,23 +111,23 @@ public class SeedFactoryTest  {
 	
 
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhDataFilterRestaurants_AllGebietHorgen() throws IOException {
-		importFromStatistischesAmtZuerich_WithZhDataFilterById_NotEmpty(INDIKATOR_ID_RESTAURANTS,INDIKATOR_ID_RESTAURANTS_SIZE);
+	public void load_WithZhDataFilterRestaurants_AllGebietHorgen() throws IOException {
+		load_WithZhDataFilterById_NotEmpty(INDIKATOR_ID_RESTAURANTS,INDIKATOR_ID_RESTAURANTS_SIZE);
 	}
 	
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhDataFilterBevoelkerung_AllGebietHorgen() throws IOException {
-		importFromStatistischesAmtZuerich_WithZhDataFilterById_NotEmpty(INDIKATOR_ID_BEVOELKERUNG,INDIKATOR_ID_BEVOELKERUNG_SIZE);
+	public void load_WithZhDataFilterBevoelkerung_AllGebietHorgen() throws IOException {
+		load_WithZhDataFilterById_NotEmpty(INDIKATOR_ID_BEVOELKERUNG,INDIKATOR_ID_BEVOELKERUNG_SIZE);
 	}
 	
 	@Test
-	public void importFromStatistischesAmtZuerich_WithZhDataFilterWohnenAnteil_AllGebietHorgen() throws IOException {
-		importFromStatistischesAmtZuerich_WithZhDataFilterById_NotEmpty(INDIKATOR_ID_WOHNEN_ANTEIL,INDIKATOR_ID_WOHNEN_ANTEIL_SIZE);
+	public void load_WithZhDataFilterWohnenAnteil_AllGebietHorgen() throws IOException {
+		load_WithZhDataFilterById_NotEmpty(INDIKATOR_ID_WOHNEN_ANTEIL,INDIKATOR_ID_WOHNEN_ANTEIL_SIZE);
 	}
 	
-	private void importFromStatistischesAmtZuerich_WithZhDataFilterById_NotEmpty(String indikator_id, int countExpected) throws IllegalStateException, FileNotFoundException {
+	private void load_WithZhDataFilterById_NotEmpty(String indikator_id, int countExpected) throws IllegalStateException, FileNotFoundException {
 		// act
-		List<Seed> resultsAll = testee.importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
+		List<Seed> resultsAll = testee.load(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018, StatistischesAmtZuerich.class);
 		List<Seed> resultsFiltered = resultsAll.stream().filter(x -> indikator_id.equals(x.getIndicatorId())).collect(Collectors.toList());
 		// assert
 		assertNotNull(resultsAll);

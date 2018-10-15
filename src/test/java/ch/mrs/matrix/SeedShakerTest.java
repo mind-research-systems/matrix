@@ -3,7 +3,7 @@ package ch.mrs.matrix;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -11,10 +11,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import ch.mrs.matrix.feature.FeatureBinding;
 import ch.mrs.matrix.seed.Seed;
 import ch.mrs.matrix.seed.SeedFactory;
 import ch.mrs.matrix.seed.loader.ch.zh.FeatureBindingStatistischesAmtZuerich;
+import ch.mrs.matrix.seed.loader.ch.zh.StatistischesAmtZuerich;
 
 public class SeedShakerTest {
 	@Rule
@@ -36,12 +36,9 @@ public class SeedShakerTest {
 	@Test
 	public void load_Any_NoException() throws IllegalStateException, FileNotFoundException {
 		// arrange, act
-		List<Seed> seeds = SeedFactory.getInstance().importFromStatistischesAmtZuerich(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018);
-		List<FeatureBinding> bindings = new ArrayList<>();
-		bindings.add(FeatureBindingStatistischesAmtZuerich.AGE);
-		bindings.add(FeatureBindingStatistischesAmtZuerich.POPULATION);
+		List<Seed> seeds = SeedFactory.getInstance().load(SeedFactory.RESOURCES + SeedFactory.DATA_ZH_2007_2018, StatistischesAmtZuerich.class);
 		// arrange
-		testee.load(seeds, bindings);
+		testee.load(seeds, Arrays.asList(FeatureBindingStatistischesAmtZuerich.values()));
 	}
 
 }

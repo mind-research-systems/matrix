@@ -7,8 +7,6 @@ import java.util.List;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import ch.mrs.matrix.seed.loader.ch.zh.StatistischesAmtZuerich;
-
 public class SeedFactory {
 	private final static SeedFactory INSTANCE = new SeedFactory();
 	public final static char SEPARATOR = ';';
@@ -26,8 +24,8 @@ public class SeedFactory {
 		return SeedFactory.INSTANCE;
 	}
 	
-	public List<Seed> importFromStatistischesAmtZuerich(String resource) throws IllegalStateException, FileNotFoundException {
-		CsvToBean<Seed> csvToBean = new CsvToBeanBuilder<Seed>(new FileReader(resource)).withSeparator(SEPARATOR).withType(StatistischesAmtZuerich.class).build();
+	public List<Seed> load(String resource, Class<? extends Seed> type) throws IllegalStateException, FileNotFoundException {
+		CsvToBean<Seed> csvToBean = new CsvToBeanBuilder<Seed>(new FileReader(resource)).withSeparator(SEPARATOR).withType(type).build();
 		return csvToBean.parse();
 	}
 }

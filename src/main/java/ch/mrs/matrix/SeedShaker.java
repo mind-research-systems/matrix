@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
 import ch.mrs.matrix.feature.FeatureBinding;
 import ch.mrs.matrix.feature.Indicator;
 import ch.mrs.matrix.feature.IndicatorProportion;
 import ch.mrs.matrix.feature.ProportionalIndicator;
-import ch.mrs.matrix.math.DistributionGenerator;
-import ch.mrs.matrix.math.MathFactory;
 import ch.mrs.matrix.seed.Seed;
 
 /**
